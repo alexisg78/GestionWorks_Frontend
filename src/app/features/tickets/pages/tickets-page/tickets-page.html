@@ -1,1 +1,5 @@
-<p>tickets-page works!</p>,
+<div class="m-4 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+  @for (card of cards(); track card.id) {
+    <ticket-card [card]="card" />
+  }
+</div>

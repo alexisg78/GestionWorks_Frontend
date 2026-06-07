@@ -1,0 +1,11 @@
+<div class="card bg-base-100 card-border shadow-md">
+  <div class="card-body">
+    <h2 class="card-title">{{ card().title }}</h2>
+    <p>{{ card().subtitle }}</p>
+    <div class="card-actions justify-end">
+      <button class="btn min-w-20" [ngClass]="card().actionVariant">
+        {{ card().actionLabel }}
+      </button>
+    </div>
+  </div>
+</div>
