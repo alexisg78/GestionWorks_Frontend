@@ -8,7 +8,7 @@ const TICKET_CARDS: TicketCardViewModel[] = [
     title: 'Crear Ticket',
     subtitle: 'Registrar una nueva incidencia.',
     actionLabel: 'Abrir',
-    actionRoute: '/tickets/new',
+    actionRoute: 'create',
     actionVariant: 'btn-primary',
   },
   {
@@ -16,7 +16,7 @@ const TICKET_CARDS: TicketCardViewModel[] = [
     title: 'Listado',
     subtitle: 'Consultar todos los tickets.',
     actionLabel: 'Ver',
-    actionRoute: '/tickets',
+    actionRoute: 'list',
     actionVariant: 'btn-secondary',
   },
   {
@@ -24,15 +24,15 @@ const TICKET_CARDS: TicketCardViewModel[] = [
     title: 'Mis Tickets',
     subtitle: 'Consultar tickets asignados.',
     actionLabel: 'Ver',
-    actionRoute: '/tickets',
+    actionRoute: 'my-tickets',
     actionVariant: 'btn-accent',
   },
   {
     id: 'open-ticket',
-    title: 'Mis Tickets',
-    subtitle: 'Consultar tickets asignados.',
+    title: 'Tickets Abiertos',
+    subtitle: 'Consultar tickets en ejecución.',
     actionLabel: 'Ver',
-    actionRoute: '/tickets',
+    actionRoute: 'open',
     actionVariant: 'btn-info',
   },
 ];

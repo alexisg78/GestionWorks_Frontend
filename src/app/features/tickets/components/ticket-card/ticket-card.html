@@ -3,7 +3,7 @@
     <h2 class="card-title">{{ card().title }}</h2>
     <p>{{ card().subtitle }}</p>
     <div class="card-actions justify-end">
-      <button class="btn min-w-20" [ngClass]="card().actionVariant">
+      <button [routerLink]="card().actionRoute" class="btn min-w-20" [class]="card().actionVariant">
         {{ card().actionLabel }}
       </button>
     </div>
