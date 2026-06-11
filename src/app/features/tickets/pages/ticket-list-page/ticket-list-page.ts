@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { TicketList } from '../../components/ticket-list/ticket-list';
 
 @Component({
-  selector: 'app-ticket-list-page',
-  imports: [],
+  selector: 'ticket-list-page',
+  imports: [TicketList],
   templateUrl: './ticket-list-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class TicketListPage {}
