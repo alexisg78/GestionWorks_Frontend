@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { PublicLayout } from './layouts/public-layout/public-layout';
 import { AppLayout } from './layouts/app-layout/app-layout';
+import { AuthLayout } from './layouts/auth-layout/auth-layout';
 
 export const routes: Routes = [
   {
@@ -20,16 +21,17 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'auth',
+    component: AuthLayout,
+    loadChildren: () => import('./features/auth/auth.routes').then((r) => r.AUTH_ROUTES),
+  },
+  {
     path: '',
     component: PublicLayout,
     children: [
       {
         path: '',
         loadChildren: () => import('./features/home/home.routes').then((r) => r.HOME_ROUTES),
-      },
-      {
-        path: 'auth',
-        loadChildren: () => import('./features/auth/auth.routes').then((r) => r.AUTH_ROUTES),
       },
       {
         path: '**',

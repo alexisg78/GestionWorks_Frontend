@@ -8,14 +8,16 @@ export const AUTH_ROUTES: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('./pages/login/login'),
+    loadComponent: () => import('./pages/login-page/login-page'),
   },
   {
     path: 'register',
-    loadComponent: () => import('./pages/register/register'),
+    loadComponent: () => import('./pages/register-page/register-page'),
   },
   {
     path: '**',
     redirectTo: 'login',
   },
 ];
+
+export default AUTH_ROUTES;
