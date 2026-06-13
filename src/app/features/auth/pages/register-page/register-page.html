@@ -1,0 +1,87 @@
+<div class="w-full">
+  <!-- Header -->
+  <div class="mb-5 text-center">
+    <h1 class="text-4xl font-bold">Crear Cuenta</h1>
+
+    <p class="text-base-content/70 mt-3">Registra una nueva cuenta para acceder al sistema.</p>
+  </div>
+
+  <!-- Form -->
+  <form>
+    <fieldset class="fieldset bg-base-100 border-base-300 rounded-box border p-6 shadow-md">
+      <legend class="fieldset-legend text-primary text-lg font-medium">Registro</legend>
+
+      <!-- Nombre -->
+      <div>
+        <label class="label">
+          <span class="label-text">Nombre Completo</span>
+        </label>
+
+        <input
+          type="text"
+          placeholder="Ej: Alexis Gonzalez"
+          class="input focus:border-primary w-full focus:outline-none"
+        />
+      </div>
+
+      <!-- Email -->
+      <div class="mt-4">
+        <label class="label">
+          <span class="label-text">Correo Electrónico</span>
+        </label>
+
+        <input
+          type="email"
+          placeholder="ejemplo@correo.com"
+          class="input focus:border-primary w-full focus:outline-none"
+        />
+      </div>
+
+      <!-- Password -->
+      <div class="mt-4">
+        <label class="label">
+          <span class="label-text">Contraseña</span>
+        </label>
+
+        <input
+          type="password"
+          placeholder="••••••••"
+          class="input focus:border-primary w-full focus:outline-none"
+        />
+      </div>
+
+      <!-- Rol -->
+      <div class="mt-4">
+        <label class="label">
+          <span class="label-text">Rol (Opcional)</span>
+        </label>
+
+        <select class="select focus:border-primary w-full focus:outline-none">
+          <option selected>Usuario</option>
+          <option>Admin</option>
+          <option>Técnico</option>
+        </select>
+
+        <div class="label">
+          <span class="label-text-alt text-base-content/60">
+            Si no seleccionas un rol, se asignará el rol por defecto.
+          </span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="mt-6">
+        <button type="submit" class="btn btn-primary w-full">Crear Cuenta</button>
+      </div>
+    </fieldset>
+  </form>
+
+  <!-- Footer -->
+  <div class="mt-6 text-center">
+    <p class="text-base-content/70 text-sm">
+      ¿Ya tienes una cuenta?
+
+      <a href="#" class="text-primary hover:underline"> Iniciar Sesión </a>
+    </p>
+  </div>
+</div>
