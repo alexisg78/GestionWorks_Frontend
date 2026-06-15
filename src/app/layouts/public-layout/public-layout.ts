@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { Navbar } from '../../shared/components/navbar/navbar';
+import { PublicNavbar } from './components/public-navbar/public-navbar';
 import { Footer } from '../../shared/components/footer/footer';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'public-layout',
-  imports: [Navbar, Footer, RouterOutlet],
+  imports: [PublicNavbar, Footer, RouterOutlet],
   templateUrl: './public-layout.html',
 })
 export class PublicLayout {}
