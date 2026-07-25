@@ -2,6 +2,6 @@
 @import 'tailwindcss';
 @plugin 'daisyui' {
   themes:
-    cmyk --default,
+    dracula --default,
     sunset --prefersdark;
 }
