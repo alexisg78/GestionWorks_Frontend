@@ -9,7 +9,7 @@
   </div>
 
   <!-- Form -->
-  <form>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <fieldset class="fieldset bg-base-100 border-base-300 rounded-box border p-6 shadow-md">
       <legend class="fieldset-legend text-primary text-lg font-medium">Acceso</legend>
 
@@ -23,6 +23,7 @@
           type="email"
           placeholder="ejemplo@correo.com"
           class="input focus:border-primary w-full focus:outline-none"
+          formControlName="email"
         />
       </div>
 
@@ -36,6 +37,7 @@
           type="password"
           placeholder="••••••••"
           class="input focus:border-primary w-full focus:outline-none"
+          formControlName="password"
         />
       </div>
 
@@ -65,3 +67,22 @@
     </p>
   </div>
 </div>
+
+@if (hasError()) {
+  <div role="alert" class="alert alert-error fixed right-5 bottom-5 w-52">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6 shrink-0 stroke-current"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
+    <span>Por favor, revise la información ingresada!</span>
+  </div>
+}
