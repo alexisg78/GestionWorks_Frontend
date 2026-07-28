@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 
@@ -8,10 +9,10 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login-page.html',
 })
 export default class LoginPage {
+  router = inject(Router);
   fb = inject(FormBuilder);
   hasError = signal(false);
   isPosting = signal(false);
-
   authService = inject(AuthService);
 
   loginForm = this.fb.nonNullable.group({
@@ -22,17 +23,25 @@ export default class LoginPage {
   onSubmit() {
     if (this.loginForm.invalid) {
       this.hasError.set(true);
-
-      setTimeout(() => {
-        this.hasError.set(false);
-      }, 2000);
-
+      this.handleErrorWithTimeout();
       return;
     }
 
     const { email = '', password = '' } = this.loginForm.value;
-    this.authService.login(email, password).subscribe((resp) => {
-      console.log(resp);
+
+    this.authService.login(email, password).subscribe((isAuthenticated) => {
+      if (isAuthenticated) {
+        this.router.navigateByUrl('/');
+        return;
+      }
+      this.hasError.set(true);
+      this.handleErrorWithTimeout();
     });
+  }
+
+  handleErrorWithTimeout() {
+    setTimeout(() => {
+      this.hasError.set(false);
+    }, 2000);
   }
 }
