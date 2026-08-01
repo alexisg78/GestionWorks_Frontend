@@ -1,4 +1,4 @@
-<nav class="navbar border-base-300 bg-base-100 border-b px-4 md:px-6">
+<nav class="navbar border-base-300 bg-base-100 border-b px-4 md:px-4">
   <!-- Mobile Menu -->
   <div class="navbar-start md:hidden">
     <div class="dropdown">
@@ -21,29 +21,53 @@
 
       <ul
         tabindex="0"
-        class="menu dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
+        class="menu dropdown-content bg-base-100 rounded-box z-50 mt-3 w-72 p-2 shadow"
       >
-        <li>
-          <a routerLink="/">Inicio</a>
-        </li>
+        <!-- Navegación -->
+        <li class="py-1"><a routerLink="/">Inicio</a></li>
+        <li class="py-1"><a href="#features">Características</a></li>
+        <li class="py-1"><a href="#about">Acerca de</a></li>
 
-        <li>
-          <a href="#features">Características</a>
-        </li>
+        <li class="py-1"><hr /></li>
 
-        <li>
-          <a href="#about">Acerca de</a>
-        </li>
+        @if (authService.authStatus() === 'not-authenticated') {
+          <li>
+            <a [routerLink]="['/auth/login']"> Acceder </a>
+          </li>
+        } @else if (authService.authStatus() === 'authenticated') {
+          <li class="flex items-center gap-3 py-2">
+            <div class="flex items-center gap-3 py-2">
+              <div class="avatar placeholder">
+                <div
+                  class="bg-primary text-primary-content flex w-11 items-center justify-center rounded-full"
+                >
+                  <span class="text-sm leading-none font-semibold">
+                    {{ initials() }}
+                  </span>
+                </div>
+              </div>
 
-        <div class="divider my-1"></div>
+              <div class="leading-tight">
+                <p class="font-semibold">
+                  {{ authService.user()?.fullName }}
+                </p>
+                <p class="text-sm opacity-60">
+                  {{ authService.user()?.email }}
+                </p>
+              </div>
+            </div>
+          </li>
 
-        <li>
-          <a routerLink="/login">Ingresar</a>
-        </li>
+          <li class="py-1"><a routerLink="/profile">Mi perfil</a></li>
+          <li class="py-1"><a routerLink="/tickets">Mis tickets</a></li>
+          <li class="py-1"><a routerLink="/settings">Configuración</a></li>
 
-        <li>
-          <a routerLink="/register">Registrarse</a>
-        </li>
+          <li class="py-1"><hr /></li>
+
+          <li>
+            <a (click)="authService.logout()" class="text-error pb-2"> Cerrar sesión </a>
+          </li>
+        }
       </ul>
     </div>
   </div>
@@ -81,7 +105,7 @@
   </div>
 
   <!-- Actions -->
-  <div class="navbar-end gap-2">
+  <div class="navbar-end gap-1">
     <!-- Theme Toggle -->
     <button class="btn btn-ghost btn-circle">
       <label class="swap swap-rotate">
@@ -111,10 +135,68 @@
     </button>
 
     <!-- Desktop Auth Buttons -->
-    <div class="hidden gap-2 md:flex">
-      <a routerLink="/login" class="btn btn-ghost"> Ingresar </a>
+    <div class="hidden md:flex">
+      @if (authService.authStatus() === 'not-authenticated') {
+        <!-- login -->
+        <a [routerLink]="['/auth/login']" class="btn btn-ghost">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="swap-on h-5 w-5 fill-current"
+            viewBox="0 0 24 24"
+          >
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H9m6-9l-4-4m4 4l-4 4m4-4H5"
+            />
+          </svg>
+          Acceder
+        </a>
+      } @else if (authService.authStatus() === 'authenticated') {
+        <div class="dropdown dropdown-end">
+          <button tabindex="0" class="btn btn-ghost flex items-center gap-2">
+            <div class="avatar placeholder">
+              <div class="bg-primary text-primary-content w-6 rounded-full">
+                <span>
+                  {{ initials() }}
+                </span>
+              </div>
+            </div>
+            <span>{{ authService.user()?.fullName }}</span>
 
-      <a routerLink="/register" class="btn btn-primary"> Registrarse </a>
+            <!-- flecha -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </button>
+
+          <ul
+            tabindex="0"
+            class="dropdown-content menu bg-base-100 rounded-box z-50 mt-2 w-56 shadow-lg"
+          >
+            <li><a>Mi perfil</a></li>
+            <li><a>Mis tickets</a></li>
+            <li><a>Configuración</a></li>
+
+            <li><hr /></li>
+
+            <li><a (click)="authService.logout()" class="text-error"> Cerrar sesión </a></li>
+          </ul>
+        </div>
+      }
     </div>
   </div>
 </nav>
