@@ -10,6 +10,9 @@ import { RouterLink } from '@angular/router';
 export class PublicNavbar {
   authService = inject(AuthService);
 
+  readonly user = this.authService.user;
+  readonly authStatus = this.authService.authStatus;
+
   initials = computed(() => {
     const fullName = this.authService.user()?.fullName;
 

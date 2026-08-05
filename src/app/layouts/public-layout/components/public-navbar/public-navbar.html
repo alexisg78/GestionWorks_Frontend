@@ -32,7 +32,7 @@
 
         @if (authService.authStatus() === 'not-authenticated') {
           <li>
-            <a [routerLink]="['/auth/login']"> Acceder </a>
+            <a [routerLink]="['/auth/login']" class="text-primary"> Acceder </a>
           </li>
         } @else if (authService.authStatus() === 'authenticated') {
           <li class="flex items-center gap-3 py-2">
@@ -49,10 +49,10 @@
 
               <div class="leading-tight">
                 <p class="font-semibold">
-                  {{ authService.user()?.fullName }}
+                  {{ user()?.fullName }}
                 </p>
                 <p class="text-sm opacity-60">
-                  {{ authService.user()?.email }}
+                  {{ user()?.email }}
                 </p>
               </div>
             </div>
@@ -136,9 +136,9 @@
 
     <!-- Desktop Auth Buttons -->
     <div class="hidden md:flex">
-      @if (authService.authStatus() === 'not-authenticated') {
+      @if (authStatus() === 'not-authenticated') {
         <!-- login -->
-        <a [routerLink]="['/auth/login']" class="btn btn-ghost">
+        <a [routerLink]="['/auth/login']" class="btn btn-ghost text-primary">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="swap-on h-5 w-5 fill-current"
@@ -156,7 +156,7 @@
           </svg>
           Acceder
         </a>
-      } @else if (authService.authStatus() === 'authenticated') {
+      } @else if (authStatus() === 'authenticated') {
         <div class="dropdown dropdown-end">
           <button tabindex="0" class="btn btn-ghost flex items-center gap-2">
             <div class="avatar placeholder">
@@ -166,7 +166,7 @@
                 </span>
               </div>
             </div>
-            <span>{{ authService.user()?.fullName }}</span>
+            <span>{{ user()?.fullName }}</span>
 
             <!-- flecha -->
             <svg
