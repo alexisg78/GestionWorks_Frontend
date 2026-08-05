@@ -7,7 +7,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { User } from '../interfaces/user.interface';
 import { AuthResponse } from '../interfaces/auth-response.interface';
 
-type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
+export type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 const baseUrl = environment.baseUrl;
 
 @Injectable({ providedIn: 'root' })

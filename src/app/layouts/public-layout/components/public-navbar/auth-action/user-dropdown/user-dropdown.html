@@ -1,0 +1,31 @@
+<div class="dropdown dropdown-end">
+  <button tabindex="0" class="btn btn-ghost flex items-center gap-2">
+    <div class="avatar placeholder">
+      <div class="bg-primary text-primary-content w-6 rounded-full">
+        <span>
+          {{ initials() }}
+        </span>
+      </div>
+    </div>
+    <span>{{ user().fullName }}</span>
+
+    <!-- flecha -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+      <path
+        fill-rule="evenodd"
+        d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+        clip-rule="evenodd"
+      />
+    </svg>
+  </button>
+
+  <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-50 mt-2 w-56 shadow-lg">
+    <li><a>Mi perfil</a></li>
+    <li><a>Mis tickets</a></li>
+    <li><a>Configuración</a></li>
+
+    <li><hr /></li>
+
+    <li><a (click)="logout.emit()" class="text-error"> Cerrar sesión </a></li>
+  </ul>
+</div>

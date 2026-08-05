@@ -1,0 +1,22 @@
+@if (authStatus() === 'not-authenticated') {
+  <a [routerLink]="['/auth/login']" class="btn btn-ghost text-primary">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="swap-on h-5 w-5 fill-current"
+      viewBox="0 0 24 24"
+    >
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M9 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H9m6-9l-4-4m4 4l-4 4m4-4H5"
+      />
+    </svg>
+    Acceder
+  </a>
+} @else if (authStatus() === 'authenticated') {
+  <user-dropdown [user]="user()!" [initials]="initials()" (logout)="authService.logout()" />
+}

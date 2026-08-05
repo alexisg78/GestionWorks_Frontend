@@ -1,0 +1,66 @@
+<div class="dropdown">
+  <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-5 w-5"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h7"
+      />
+    </svg>
+  </div>
+
+  <ul tabindex="0" class="menu dropdown-content bg-base-100 rounded-box z-50 mt-3 w-72 p-2 shadow">
+    <!-- Navegación -->
+    <li class="py-1"><a routerLink="/">Inicio</a></li>
+    <li class="py-1"><a href="#features">Características</a></li>
+    <li class="py-1"><a href="#about">Acerca de</a></li>
+
+    <li class="py-1"><hr /></li>
+
+    @if (authStatus() === 'not-authenticated') {
+      <li>
+        <a class="text-primary" [routerLink]="['/auth/login']"> Acceder </a>
+      </li>
+    } @else if (authStatus() === 'authenticated') {
+      <li class="flex items-center gap-3 py-2">
+        <div class="flex items-center gap-3 py-2">
+          <div class="avatar placeholder">
+            <div
+              class="bg-primary text-primary-content flex w-11 items-center justify-center rounded-full"
+            >
+              <span class="text-sm leading-none font-semibold">
+                {{ initials() }}
+              </span>
+            </div>
+          </div>
+
+          <div class="leading-tight">
+            <p class="font-semibold">
+              {{ user()?.fullName }}
+            </p>
+            <p class="text-sm opacity-60">
+              {{ user()?.email }}
+            </p>
+          </div>
+        </div>
+      </li>
+
+      <li class="py-1"><a routerLink="/profile">Mi perfil</a></li>
+      <li class="py-1"><a routerLink="/tickets">Mis tickets</a></li>
+      <li class="py-1"><a routerLink="/settings">Configuración</a></li>
+
+      <li class="py-1"><hr /></li>
+
+      <li>
+        <a (click)="logout()" class="text-error pb-2"> Cerrar sesión </a>
+      </li>
+    }
+  </ul>
+</div>

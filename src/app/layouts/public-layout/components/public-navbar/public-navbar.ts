@@ -1,27 +1,12 @@
-import { Component, computed, inject } from '@angular/core';
-import { AuthService } from '../../../../features/auth/services/auth.service';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ThemeToggle } from '../../../../shared/components/theme-toggle/theme-toggle';
+import { AuthActions } from './auth-action/auth-actions';
+import { MobileMenu } from './mobile-menu/mobile-menu';
 
 @Component({
   selector: 'public-navbar',
-  imports: [RouterLink],
+  imports: [RouterLink, ThemeToggle, AuthActions, MobileMenu],
   templateUrl: './public-navbar.html',
 })
-export class PublicNavbar {
-  authService = inject(AuthService);
-
-  readonly user = this.authService.user;
-  readonly authStatus = this.authService.authStatus;
-
-  initials = computed(() => {
-    const fullName = this.authService.user()?.fullName;
-
-    if (!fullName) return '';
-
-    const parts = fullName.trim().split(/\s+/);
-
-    return parts.length === 1
-      ? parts[0][0].toUpperCase()
-      : `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
-  });
-}
+export class PublicNavbar {}
