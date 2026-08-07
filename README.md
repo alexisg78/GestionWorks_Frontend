@@ -1,59 +1,209 @@
-# GestionWorksFrontendV3
+# GestionWorks (Frontend)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.1.
+Frontend de **GestionWorks**, una aplicación web para la gestión de incidencias, solicitudes y órdenes de trabajo.
 
-## Development server
+Este proyecto forma parte de una iniciativa personal orientada a aplicar **Angular moderno**, buenas prácticas de arquitectura, componentes reutilizables y una interfaz responsive utilizando **Tailwind CSS** y **DaisyUI**.
 
-To start a local development server, run:
+> 🚧 **Estado del Proyecto:** Work In Progress (WIP).
+> Actualmente me encuentro desarrollando el módulo de autenticación y la lógica de negocio para la gestión de tickets.
+
+---
+
+# 🛠️ Stack Tecnológico
+
+## Frontend
+
+- Angular 21
+- TypeScript
+- Angular Router
+- HttpClient
+- Angular Signals
+- RxJS
+- rxResource
+
+## UI
+
+- Tailwind CSS v4
+- DaisyUI
+- Responsive Design
+- Mobile First
+
+## Arquitectura
+
+- Standalone Components
+- Feature-based Architecture
+- Layout-based Routing
+- Component Composition
+- Smart & Presentational Components
+- Reusable UI Components
+
+---
+
+# ✨ Características
+
+- Landing Page pública
+- Sistema de autenticación
+- Gestión de sesión del usuario
+- Layouts públicos y privados
+- Navbar responsive
+- Componentes reutilizables
+- Navegación modular mediante Angular Router
+- Gestión de tickets
+- Tema oscuro
+
+---
+
+# 🏗️ Arquitectura
+
+El proyecto sigue una **Feature-based Architecture**, separando la aplicación por funcionalidades y responsabilidades para facilitar su escalabilidad y mantenimiento.
+
+```text
+src/
+└── app/
+    ├── features/
+    │   ├── auth/
+    │   ├── home/
+    │   └── tickets/
+    │       ├── components/
+    │       ├── models/
+    │       ├── pages/
+    │       ├── services/
+    │       └── tickets.routes.ts
+    │
+    ├── layouts/
+    │   ├── app-layout/
+    │   ├── auth-layout/
+    │   └── public-layout/
+    │
+    ├── shared/
+    │   └── components/
+    │       ├── footer/
+    │       └── theme-toggle/
+    │
+    ├── app.config.ts
+    ├── app.routes.ts
+    └── app.ts
+```
+
+La estructura del proyecto busca mantener una clara separación entre:
+
+- **Features:** módulos funcionales de la aplicación (Auth, Tickets, Home, etc.).
+- **Layouts:** estructura visual según el contexto (público, autenticación o aplicación).
+- **Shared:** componentes reutilizables compartidos por toda la aplicación.
+- **Components:** composición de interfaces mediante componentes pequeños y reutilizables.
+
+---
+
+# 📐 Principios del proyecto
+
+Durante el desarrollo se busca aplicar las siguientes buenas prácticas:
+
+- Componentes pequeños y reutilizables.
+- Separación de responsabilidades.
+- Arquitectura escalable.
+- UI desacoplada de la lógica de negocio.
+- Estado reactivo mediante Angular Signals.
+- Código tipado utilizando TypeScript.
+- Diseño responsive desde el inicio.
+- Composición de componentes sobre herencia.
+- Estructura modular basada en funcionalidades.
+
+---
+
+# 🚀 Objetivo
+
+El objetivo principal de este proyecto es desarrollar una aplicación frontend moderna aplicando buenas prácticas de Angular, una arquitectura escalable y una experiencia de usuario intuitiva, preparada para integrarse con una API REST desarrollada en NestJS.
+
+Además, este proyecto funciona como un espacio de aprendizaje y experimentación donde aplico nuevas características del ecosistema Angular y mejores prácticas de desarrollo frontend.
+
+---
+
+# 🚧 En desarrollo
+
+Actualmente se está trabajando en:
+
+- Sistema completo de autenticación.
+- CRUD de Tickets.
+- Dashboard de usuario.
+- Perfil de usuario.
+- Gestión de estados.
+- Mejoras de experiencia de usuario (UX/UI).
+
+---
+
+# ▶️ Ejecutar en desarrollo
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/alexisg78/GestionWorks_Frontend.git
+```
+
+### 2. Instalar dependencias
+
+```bash
+npm install
+```
+
+### 3. Configurar el entorno
+
+Crear el archivo:
+
+```text
+src/environments/environment.ts
+```
+
+Ejemplo:
+
+```ts
+export const environment = {
+  production: false,
+  baseUrl: 'http://localhost:3000/api',
+};
+```
+
+### 4. Ejecutar la aplicación
+
+```bash
+npm start
+```
+
+o
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+La aplicación estará disponible en:
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```text
+http://localhost:4200
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+# 🔗 Backend
 
-## Building
+Este proyecto consume la API desarrollada en el siguiente repositorio:
 
-To build the project run:
+👉 **Backend (API):** [GestionWorks_API](https://github.com/alexisg78/GestionWorks_Backend.git)
 
-```bash
-ng build
-```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+# 🗺️ Roadmap
 
-## Running unit tests
+- [x] Arquitectura base
+- [x] Layouts públicos y privados
+- [x] Navbar responsive
+- [x] Sistema de autenticación
+- [ ] CRUD completo de Tickets
+- [ ] Dashboard
+- [ ] Perfil de usuario
+- [ ] Notificaciones
+- [ ] Tests
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+---
 
-```bash
-ng test
-```
+# 📄 Licencia
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Proyecto desarrollado con fines educativos, de aprendizaje y como parte de mi portfolio personal de desarrollo Full Stack.
