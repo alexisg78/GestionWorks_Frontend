@@ -1,6 +1,10 @@
 <button class="btn btn-ghost btn-circle">
   <label class="swap swap-rotate">
-    <input type="checkbox" class="theme-controller" value="dracula" />
+    <input
+      type="checkbox"
+      [checked]="themeService.theme() === 'dracula'"
+      (change)="toggleTheme()"
+    />
 
     <!-- sun icon -->
     <svg
