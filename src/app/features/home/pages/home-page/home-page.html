@@ -1,12 +1,50 @@
-<div class="hero bg-base-200 min-h-screen">
+<!-- Hero -->
+<section class="hero bg-base-200 min-h-screen">
   <div class="hero-content text-center">
     <div class="max-w-md">
       <h1 class="text-5xl font-bold">GestionWorks</h1>
       <p class="py-6">
-        Gestioná incidencias y solicitudes de servicio desde una plataforma centralizada. Conectá a
-        quienes necesitan una solución con quienes pueden brindarla.
+        Gestioná incidencias y solicitudes de servicio desde una plataforma centralizada. Conectá
+        cada necesidad con la persona adecuada para resolverla
       </p>
-      <button routerLink="/app" class="btn btn-primary">Comenzar</button>
+      <button routerLink="/app/tickets" class="btn btn-primary">Registrar una incidencia</button>
     </div>
   </div>
-</div>
+</section>
+
+<!-- Cómo funciona -->
+<section class="bg-base-100 flex min-h-screen items-center px-6 py-16">
+  <div class="mx-auto max-w-6xl">
+    <div class="mb-12 text-center">
+      <h2 class="text-3xl font-bold">¿Cómo funciona?</h2>
+
+      <p class="text-base-content/70 mt-4">
+        Gestioná tus incidencias de forma simple y centralizada.
+      </p>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-3">
+      @for (stepCard of stepCards; track stepCard.step) {
+        <step-card
+          [step]="stepCard.step"
+          [title]="stepCard.title"
+          [description]="stepCard.description"
+        />
+      }
+    </div>
+  </div>
+</section>
+
+<!-- CTA final -->
+<section class="bg-base-200 flex min-h-screen items-center px-6 py-16">
+  <div class="mx-auto max-w-3xl text-center">
+    <h2 class="text-3xl font-bold md:text-4xl">¿Tenés una incidencia pendiente?</h2>
+
+    <p class="text-base-content/70 mx-auto mt-4 max-w-xl">
+      Registrala en GestionWorks, asignala a quien pueda resolverla y seguí su progreso hasta el
+      cierre.
+    </p>
+
+    <button routerLink="/app/tickets" class="btn btn-primary mt-8">Crear una incidencia</button>
+  </div>
+</section>
