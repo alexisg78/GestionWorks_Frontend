@@ -60,6 +60,11 @@ El proyecto sigue una **Feature-based Architecture**, separando la aplicación p
 ```text
 src/
 └── app/
+    ├── core/
+    │   └── services/
+    │       ├── alert.service.ts
+    │       └── theme.service.ts
+    │
     ├── features/
     │   ├── auth/
     │   ├── home/
@@ -87,6 +92,7 @@ src/
 
 La estructura del proyecto busca mantener una clara separación entre:
 
+- **Core:** servicios y funcionalidades centrales de la aplicación, utilizados de forma global (alertas, gestión de temas, etc.).
 - **Features:** módulos funcionales de la aplicación (Auth, Tickets, Home, etc.).
 - **Layouts:** estructura visual según el contexto (público, autenticación o aplicación).
 - **Shared:** componentes reutilizables compartidos por toda la aplicación.
