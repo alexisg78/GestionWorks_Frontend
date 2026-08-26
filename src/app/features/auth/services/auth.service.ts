@@ -1,8 +1,9 @@
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { environment } from '../../../../environments/environment';
 import { catchError, map, Observable, of, tap } from 'rxjs';
-import { rxResource } from '@angular/core/rxjs-interop';
+import { SKIP_AUTH } from '../../../core/http/http-context.tokens';
 
 import { User } from '../interfaces/user.interface';
 import { AuthResponse } from '../interfaces/auth-response.interface';
@@ -35,10 +36,16 @@ export class AuthService {
 
   login(email: string, password: string): Observable<boolean> {
     return this.http
-      .post<AuthResponse>(`${baseUrl}/auth/login`, {
-        email: email,
-        password: password,
-      })
+      .post<AuthResponse>(
+        `${baseUrl}/auth/login`,
+        {
+          email: email,
+          password: password,
+        },
+        {
+          context: new HttpContext().set(SKIP_AUTH, true),
+        },
+      )
       .pipe(
         tap((resp) => this.handleAuthSuccess(resp)),
         map(() => true),
@@ -48,11 +55,17 @@ export class AuthService {
 
   register(email: string, password: string, fullName: string): Observable<boolean> {
     return this.http
-      .post<AuthResponse>(`${baseUrl}/auth/register`, {
-        email: email,
-        password: password,
-        fullName: fullName,
-      })
+      .post<AuthResponse>(
+        `${baseUrl}/auth/register`,
+        {
+          email: email,
+          password: password,
+          fullName: fullName,
+        },
+        {
+          context: new HttpContext().set(SKIP_AUTH, true),
+        },
+      )
       .pipe(
         tap((resp) => {
           this.handleAuthSuccess(resp);
@@ -76,18 +89,6 @@ export class AuthService {
       this.logout();
       return of(false);
     }
-
-    // return this.http
-    //   .get<AuthResponse>(`${baseUrl}/auth/check-status`, {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   })
-    //   .pipe(
-    //     tap((resp) => this.handleAuthSuccess(resp)),
-    //     map(() => true),
-    //     catchError((error: any) => this.handleAuthError(error)),
-    //   );
 
     return this.http.get<AuthResponse>(`${baseUrl}/auth/check-status`).pipe(
       tap((resp) => this.handleAuthSuccess(resp)),
