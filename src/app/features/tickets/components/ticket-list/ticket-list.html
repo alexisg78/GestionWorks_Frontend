@@ -1,46 +1,22 @@
-<div class="mx-auto max-w-7xl space-y-4">
-  <div class="bg-base-100 border-base-300 rounded-box border p-5 shadow-md">
-    <div class="flex flex-col md:flex-row md:justify-between">
-      <div>
-        <h2 class="text-lg font-semibold">#123 - No puedo acceder al sistema</h2>
+@for (ticket of tickets(); track ticket) {
+  <div class="mx-auto max-w-7xl space-y-4">
+    <div class="bg-base-100 border-base-300 rounded-box mt-2 border p-5 shadow-md">
+      <div class="flex flex-col md:flex-row md:justify-between">
+        <div>
+          <h2 class="text-lg font-semibold">{{ ticket.title }}</h2>
+          <p class="text-base-content/60 text-sm">{{ ticket.createdBy.fullName }}</p>
+        </div>
 
-        <p class="text-base-content/60 text-sm">Alexis Gonzalez</p>
+        <div>
+          <div class="badge badge-primary mt-1">{{ ticket.status }}</div>
+          <div class="badge badge-primary mt-1 ml-1">{{ ticket.priority }}</div>
+        </div>
       </div>
 
-      <div class="badge badge-primary mt-1">Abierto</div>
-    </div>
-
-    <p class="text-base-content/80 mt-4">
-      El usuario informa que no puede iniciar sesión desde la aplicación web luego de cambiar su
-      contraseña.
-    </p>
-
-    <div class="mt-4 flex items-center justify-between">
-      <span class="text-base-content/50 text-sm"> Hace 2 horas </span>
-
-      <button class="btn btn-primary btn-sm">Ver detalle</button>
-    </div>
-  </div>
-
-  <div class="bg-base-100 border-base-300 rounded-box border p-5 shadow-md">
-    <div class="flex flex-col md:flex-row md:justify-between">
-      <div>
-        <h2 class="text-lg font-semibold">#124 - Error al generar reporte</h2>
-
-        <p class="text-base-content/60 text-sm">María Fared</p>
+      <div class="mt-4 flex items-center justify-between">
+        <span class="text-base-content/50 text-sm"> Hace 2 horas </span>
+        <button class="btn btn-primary btn-sm">Ver detalle</button>
       </div>
-
-      <div class="badge badge-secondary mt-1">En Progreso</div>
-    </div>
-
-    <p class="text-base-content/80 mt-4">
-      El reporte PDF se genera vacío cuando se seleccionan filtros específicos.
-    </p>
-
-    <div class="mt-4 flex items-center justify-between">
-      <span class="text-base-content/50 text-sm"> Hace 1 día </span>
-
-      <button class="btn btn-secondary btn-sm">Ver detalle</button>
     </div>
   </div>
-</div>
+}
