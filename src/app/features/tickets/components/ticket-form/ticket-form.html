@@ -22,10 +22,11 @@
 
         <select class="select focus:border-primary w-full focus:outline-none">
           <option disabled selected>Seleccione un estado</option>
-          <option>Abierto</option>
-          <option disabled>En progreso</option>
-          <option disabled>Cerrado</option>
-          <option disabled>Cancelado</option>
+          @for (status of statuses; track status) {
+            <option [value]="status" [disabled]="status !== ticketStatus.OPEN">
+              {{ statusLabels[status] }}
+            </option>
+          }
         </select>
       </div>
 
@@ -36,9 +37,9 @@
 
         <select class="select focus:border-primary w-full focus:outline-none">
           <option disabled selected>Seleccione una prioridad</option>
-          <option>Baja</option>
-          <option>Media</option>
-          <option>Alta</option>
+          @for (priority of priorities; track priority) {
+            <option>{{ priorityLabels[priority] }}</option>
+          }
         </select>
       </div>
     </div>
