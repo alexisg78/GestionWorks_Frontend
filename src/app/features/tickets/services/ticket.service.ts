@@ -16,7 +16,7 @@ export class TicketService {
     return this.http.get<TicketResponse[]>(`${this.endpoint}`);
   }
 
-  getTicket(id: number): Observable<TicketResponse> {
+  getTicket(id: string): Observable<TicketResponse> {
     return this.http.get<TicketResponse>(`${this.endpoint}/${id}`);
   }
 
