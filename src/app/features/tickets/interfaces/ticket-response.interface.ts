@@ -11,4 +11,6 @@ export interface TicketResponse {
   createdBy: UserSummary;
   assignedUser: UserSummary | null;
   images: any[];
+  createdAt: Date;
+  updatedAt: Date;
 }
