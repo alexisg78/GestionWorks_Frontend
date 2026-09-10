@@ -113,17 +113,17 @@
           </h1>
 
           <p class="text-base-content/60 mt-1 text-sm">
-            {{ ticket.createdBy.fullName }} · Hace 2 horas
+            {{ ticket.createdBy.fullName }} · {{ getTimeAgo(ticket.createdAt) }}
           </p>
         </div>
 
         <div class="flex shrink-0 gap-2">
           <span class="badge badge-primary">
-            {{ ticket.status }}
+            {{ statusLabels[ticket.status] }}
           </span>
 
           <span class="badge badge-primary">
-            {{ ticket.priority }}
+            {{ priorityLabels[ticket.priority] }}
           </span>
         </div>
       </div>
@@ -148,14 +148,14 @@
           <div>
             <p class="text-base-content/50 text-sm">Estado</p>
             <span class="badge badge-primary mt-1">
-              {{ ticket.status }}
+              {{ statusLabels[ticket.status] }}
             </span>
           </div>
 
           <div>
             <p class="text-base-content/50 text-sm">Prioridad</p>
             <span class="badge badge-primary mt-1">
-              {{ ticket.priority }}
+              {{ priorityLabels[ticket.priority] }}
             </span>
           </div>
 
@@ -166,7 +166,7 @@
 
           <div>
             <p class="text-base-content/50 text-sm">Creado</p>
-            <p class="mt-1">07 Sep 2026, 18:30</p>
+            <p class="mt-1">{{ ticket.createdAt | date: 'dd/MM/yyyy HH:mm' }} h.</p>
           </div>
         </div>
       </section>
