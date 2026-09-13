@@ -14,7 +14,7 @@
       </div>
 
       <div class="mt-4 flex items-center justify-between">
-        <span class="text-base-content/50 text-sm"> Hace 2 horas </span>
+        <span class="text-base-content/50 text-sm">{{ ticket.createdAt | timeAgo }}</span>
         <button [routerLink]="['/app/tickets', ticket.id]" class="btn btn-primary btn-sm">
           Ver detalle
         </button>

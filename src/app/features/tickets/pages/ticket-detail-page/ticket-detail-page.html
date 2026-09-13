@@ -113,7 +113,7 @@
           </h1>
 
           <p class="text-base-content/60 mt-1 text-sm">
-            {{ ticket.createdBy.fullName }} · {{ getTimeAgo(ticket.createdAt) }}
+            {{ ticket.createdBy.fullName }} · {{ ticket.createdAt | timeAgo }}
           </p>
         </div>
 

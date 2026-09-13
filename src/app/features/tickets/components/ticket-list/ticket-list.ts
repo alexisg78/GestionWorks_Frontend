@@ -3,10 +3,11 @@ import { RouterLink } from '@angular/router';
 import { TicketResponse } from '../../interfaces/ticket-response.interface';
 import { PRIORITY_LABELS } from '../../constants/priority-labels';
 import { STATUS_LABELS } from '../../constants/status-labels';
+import { TimeAgoPipe } from '../../../../shared/pipes/time-ago.pipe';
 
 @Component({
   selector: 'ticket-list',
-  imports: [RouterLink],
+  imports: [RouterLink, TimeAgoPipe],
   templateUrl: './ticket-list.html',
 })
 export class TicketList {
