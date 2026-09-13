@@ -8,8 +8,12 @@
         </div>
 
         <div>
-          <div class="badge badge-primary mt-1">{{ statusLabels[ticket.status] }}</div>
-          <div class="badge badge-primary mt-1 ml-1">{{ priorityLabels[ticket.priority] }}</div>
+          <div class="badge mt-1" [ngClass]="statusBadges[ticket.status]">
+            {{ statusLabels[ticket.status] }}
+          </div>
+          <div class="badge mt-1 ml-1" [ngClass]="priorityBadges[ticket.priority]">
+            {{ priorityLabels[ticket.priority] }}
+          </div>
         </div>
       </div>
 

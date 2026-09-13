@@ -118,11 +118,11 @@
         </div>
 
         <div class="flex shrink-0 gap-2">
-          <span class="badge badge-primary">
+          <span class="badge" [ngClass]="statusBadges[ticket.status]">
             {{ statusLabels[ticket.status] }}
           </span>
 
-          <span class="badge badge-primary">
+          <span class="badge" [ngClass]="priorityBadges[ticket.priority]">
             {{ priorityLabels[ticket.priority] }}
           </span>
         </div>
@@ -147,14 +147,14 @@
         <div class="mt-5 space-y-5">
           <div>
             <p class="text-base-content/50 text-sm">Estado</p>
-            <span class="badge badge-primary mt-1">
+            <span class="badge mt-1" [ngClass]="statusBadges[ticket.status]">
               {{ statusLabels[ticket.status] }}
             </span>
           </div>
 
           <div>
             <p class="text-base-content/50 text-sm">Prioridad</p>
-            <span class="badge badge-primary mt-1">
+            <span class="badge mt-1" [ngClass]="priorityBadges[ticket.priority]">
               {{ priorityLabels[ticket.priority] }}
             </span>
           </div>
