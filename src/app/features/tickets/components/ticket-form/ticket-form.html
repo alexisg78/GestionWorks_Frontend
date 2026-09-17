@@ -1,4 +1,4 @@
-<div class="mx-auto max-w-4xl">
+<div class="mx-auto max-w-4xl p-4">
   <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
     <fieldset class="fieldset bg-base-100 border-base-300 rounded-box border p-6 shadow-md">
       <legend class="fieldset-legend text-primary text-lg font-medium">Información General</legend>
@@ -10,7 +10,7 @@
 
       <input
         type="text"
-        placeholder="Ej: No puedo acceder al sistema"
+        placeholder="Título de la incidencia"
         class="input focus:border-primary w-full focus:outline-none"
         formControlName="title"
       />
@@ -67,8 +67,6 @@
 
       <!-- Acciones -->
       <div class="mt-6 flex justify-end gap-3">
-        <button type="button" class="btn btn-ghost min-w-36" (click)="onCancel()">Cancelar</button>
-
         <button type="submit" class="btn btn-primary min-w-36">Crear Ticket</button>
       </div>
     </fieldset>

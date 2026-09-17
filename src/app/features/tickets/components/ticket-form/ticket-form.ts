@@ -55,11 +55,11 @@ export class TicketForm {
     // TODO: Llamar al metodo create del service
   }
 
-  onCancel() {
+  clear() {
     this.ticketForm.reset({
       title: '',
-      status: this.ticketStatus.OPEN,
-      priority: this.priority.low,
+      status: TicketStatus.OPEN,
+      priority: Priority.low,
       detail: '',
     });
   }
