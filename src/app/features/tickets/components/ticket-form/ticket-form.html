@@ -1,66 +1,76 @@
 <div class="mx-auto max-w-4xl">
-  <fieldset class="fieldset bg-base-100 border-base-300 rounded-box border p-6 shadow-md">
-    <legend class="fieldset-legend text-primary text-lg font-medium">Información General</legend>
+  <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+    <fieldset class="fieldset bg-base-100 border-base-300 rounded-box border p-6 shadow-md">
+      <legend class="fieldset-legend text-primary text-lg font-medium">Información General</legend>
 
-    <!-- Título -->
-    <label class="label text-primary">
-      <span class="label-text text-primary">Título</span>
-    </label>
-
-    <input
-      type="text"
-      placeholder="Ej: No puedo acceder al sistema"
-      class="input focus:border-primary w-full focus:outline-none"
-    />
-
-    <!-- Estado y Prioridad -->
-    <div class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-      <div>
-        <label class="label">
-          <span class="label-text text-primary mb-1">Estado</span>
-        </label>
-
-        <select class="select focus:border-primary w-full focus:outline-none">
-          <option disabled selected>Seleccione un estado</option>
-          @for (status of statuses; track status) {
-            <option [value]="status" [disabled]="status !== ticketStatus.OPEN">
-              {{ statusLabels[status] }}
-            </option>
-          }
-        </select>
-      </div>
-
-      <div>
-        <label class="label">
-          <span class="label-text text-primary mb-1">Prioridad</span>
-        </label>
-
-        <select class="select focus:border-primary w-full focus:outline-none">
-          <option disabled selected>Seleccione una prioridad</option>
-          @for (priority of priorities; track priority) {
-            <option>{{ priorityLabels[priority] }}</option>
-          }
-        </select>
-      </div>
-    </div>
-
-    <!-- Descripción -->
-    <div class="mt-4">
-      <label class="label">
-        <span class="label-text text-primary mb-1">Descripción</span>
+      <!-- Título -->
+      <label class="label text-primary">
+        <span class="label-text text-primary">Título</span>
       </label>
 
-      <textarea
-        class="textarea focus:border-primary h-40 w-full focus:outline-none"
-        placeholder="Describe el problema con el mayor detalle posible..."
-      ></textarea>
-    </div>
+      <input
+        type="text"
+        placeholder="Ej: No puedo acceder al sistema"
+        class="input focus:border-primary w-full focus:outline-none"
+        formControlName="title"
+      />
 
-    <!-- Acciones -->
-    <div class="mt-6 flex justify-end gap-3">
-      <button class="btn btn-ghost min-w-36">Cancelar</button>
+      <!-- Estado y Prioridad -->
+      <div class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div>
+          <label class="label">
+            <span class="label-text text-primary mb-1">Estado</span>
+          </label>
 
-      <button class="btn btn-primary min-w-36">Crear Ticket</button>
-    </div>
-  </fieldset>
+          <select
+            class="select focus:border-primary w-full focus:outline-none"
+            formControlName="status"
+          >
+            <option disabled [ngValue]="undefined">Seleccione un estado</option>
+            @for (status of statuses; track status) {
+              <option [ngValue]="status" [disabled]="status !== ticketStatus.OPEN">
+                {{ statusLabels[status] }}
+              </option>
+            }
+          </select>
+        </div>
+
+        <div>
+          <label class="label">
+            <span class="label-text text-primary mb-1">Prioridad</span>
+          </label>
+
+          <select
+            class="select focus:border-primary w-full focus:outline-none"
+            formControlName="priority"
+          >
+            <option disabled>Seleccione una prioridad</option>
+            @for (priority of priorities; track priority) {
+              <option [ngValue]="priority">{{ priorityLabels[priority] }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <!-- Descripción -->
+      <div class="mt-4">
+        <label class="label">
+          <span class="label-text text-primary mb-1">Descripción</span>
+        </label>
+
+        <textarea
+          class="textarea focus:border-primary h-40 w-full focus:outline-none"
+          placeholder="Describe el problema con el mayor detalle posible..."
+          formControlName="detail"
+        ></textarea>
+      </div>
+
+      <!-- Acciones -->
+      <div class="mt-6 flex justify-end gap-3">
+        <button type="button" class="btn btn-ghost min-w-36" (click)="onCancel()">Cancelar</button>
+
+        <button type="submit" class="btn btn-primary min-w-36">Crear Ticket</button>
+      </div>
+    </fieldset>
+  </form>
 </div>
