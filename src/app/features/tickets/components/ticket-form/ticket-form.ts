@@ -1,10 +1,13 @@
 import { Component, inject } from '@angular/core';
+import { TicketService } from '../../services/ticket.service';
+import { TicketRequest } from '../../interfaces/ticket-request.interface';
 import { TicketStatus } from '../../enums/ticket-status.enum';
 import { Priority } from '../../enums/priority.enum';
 import { STATUS_LABELS } from '../../constants/status-labels';
 import { PRIORITY_LABELS } from '../../constants/priority-labels';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TicketRequest } from '../../interfaces/ticket-request.interface';
+import { AlertService } from '../../../../core/services/alert.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'ticket-form',
@@ -19,8 +22,11 @@ export class TicketForm {
   readonly ticketStatus = TicketStatus;
   readonly statusLabels = STATUS_LABELS;
   readonly statuses = Object.values(TicketStatus);
+  isCreating = false;
 
   private readonly fb = inject(NonNullableFormBuilder);
+  private readonly ticketService = inject(TicketService);
+  private readonly alertService = inject(AlertService);
 
   readonly ticketForm = this.fb.group({
     title: this.fb.control('', [
@@ -52,7 +58,18 @@ export class TicketForm {
       status: value.status,
     };
 
-    // TODO: Llamar al metodo create del service
+    this.ticketService
+      .createTicket(request)
+      .pipe(finalize(() => (this.isCreating = false)))
+      .subscribe({
+        next: () => {
+          this.alertService.success('Ticket creado correctamente!');
+          this.clear();
+        },
+        error: () => {
+          this.alertService.error('No se pudo crear el ticket');
+        },
+      });
   }
 
   clear() {
