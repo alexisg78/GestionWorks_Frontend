@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { TicketList } from '../../components/ticket-list/ticket-list';
 import { TicketFilter } from '../../components/ticket-filter/ticket-filter';
-import { TicketService } from '../../services/ticket.service';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { TicketStore } from '../../services/ticket.store';
 
 @Component({
   selector: 'ticket-list-page',
@@ -10,9 +10,9 @@ import { rxResource } from '@angular/core/rxjs-interop';
   templateUrl: './ticket-list-page.html',
 })
 export default class TicketListPage {
-  ticketService = inject(TicketService);
+  private readonly ticketStore = inject(TicketStore);
 
-  ticketsResource = rxResource({
-    stream: () => this.ticketService.getTickets(),
+  readonly ticketsResource = rxResource({
+    stream: () => this.ticketStore.loadTickets(),
   });
 }

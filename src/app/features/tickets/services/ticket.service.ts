@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_BASE_URL } from '../../../core/http/api.config';
 import { Observable } from 'rxjs';
@@ -24,7 +24,7 @@ export class TicketService {
     return this.http.post<TicketResponse>(this.endpoint, data);
   }
 
-  updateTicket(id: number, data: TicketRequest): Observable<TicketResponse> {
+  updateTicket(id: string, data: TicketRequest): Observable<TicketResponse> {
     return this.http.patch<TicketResponse>(`${this.endpoint}/${id}`, data);
   }
 }

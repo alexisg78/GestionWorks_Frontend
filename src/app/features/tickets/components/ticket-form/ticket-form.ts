@@ -1,13 +1,14 @@
 import { Component, inject } from '@angular/core';
-import { TicketService } from '../../services/ticket.service';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { finalize } from 'rxjs';
+import { TicketStore } from '../../services/ticket.store';
 import { TicketRequest } from '../../interfaces/ticket-request.interface';
 import { TicketStatus } from '../../enums/ticket-status.enum';
 import { Priority } from '../../enums/priority.enum';
 import { STATUS_LABELS } from '../../constants/status-labels';
 import { PRIORITY_LABELS } from '../../constants/priority-labels';
-import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertService } from '../../../../core/services/alert.service';
-import { finalize } from 'rxjs';
+import { NgClass } from '../../../../../../node_modules/@angular/common/types/_common_module-chunk';
 
 @Component({
   selector: 'ticket-form',
@@ -25,7 +26,7 @@ export class TicketForm {
   isCreating = false;
 
   private readonly fb = inject(NonNullableFormBuilder);
-  private readonly ticketService = inject(TicketService);
+  private readonly ticketStore = inject(TicketStore);
   private readonly alertService = inject(AlertService);
 
   readonly ticketForm = this.fb.group({
@@ -58,13 +59,15 @@ export class TicketForm {
       status: value.status,
     };
 
-    this.ticketService
+    this.isCreating = true;
+
+    this.ticketStore
       .createTicket(request)
       .pipe(finalize(() => (this.isCreating = false)))
       .subscribe({
         next: () => {
           this.alertService.success('Ticket creado correctamente!');
-          this.clear();
+          this.formReset();
         },
         error: () => {
           this.alertService.error('No se pudo crear el ticket');
@@ -72,7 +75,7 @@ export class TicketForm {
       });
   }
 
-  clear() {
+  formReset() {
     this.ticketForm.reset({
       title: '',
       status: TicketStatus.OPEN,

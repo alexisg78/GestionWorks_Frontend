@@ -67,7 +67,9 @@
 
       <!-- Acciones -->
       <div class="mt-6 flex justify-end gap-3">
-        <button type="submit" class="btn btn-primary min-w-36">Crear Ticket</button>
+        <button type="submit" class="btn btn-primary min-w-36" [disabled]="isCreating">
+          Crear Ticket
+        </button>
       </div>
     </fieldset>
   </form>
