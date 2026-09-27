@@ -8,7 +8,6 @@ import { Priority } from '../../enums/priority.enum';
 import { STATUS_LABELS } from '../../constants/status-labels';
 import { PRIORITY_LABELS } from '../../constants/priority-labels';
 import { AlertService } from '../../../../core/services/alert.service';
-import { NgClass } from '../../../../../../node_modules/@angular/common/types/_common_module-chunk';
 
 @Component({
   selector: 'ticket-form',
