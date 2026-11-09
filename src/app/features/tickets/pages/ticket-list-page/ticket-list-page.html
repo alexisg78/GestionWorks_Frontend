@@ -4,10 +4,13 @@
     (statusChange)="onStatusChange($event)"
     (priorityChange)="onPriorityChange($event)"
   />
-  <ticket-list
-    [tickets]="ticketsResource.value() ?? []"
-    [searchValue]="searchText()"
-    [statusValue]="statusText()"
-    [priorityValue]="priorityText()"
-  />
+  <div class="min-h-150">
+    <ticket-list
+      [tickets]="ticketsResource.value() ?? []"
+      [searchValue]="searchText()"
+      [statusValue]="statusText()"
+      [priorityValue]="priorityText()"
+    />
+  </div>
+  <app-pagination [pages]="ticketStore.pages()" [currentPage]="paginationService.currentPage()" />
 </div>

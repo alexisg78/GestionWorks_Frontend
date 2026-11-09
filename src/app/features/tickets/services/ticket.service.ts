@@ -1,8 +1,8 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_BASE_URL } from '../../../core/http/api.config';
-import { Observable } from 'rxjs';
-import { TicketResponse } from '../interfaces/ticket-response.interface';
+import { map, Observable } from 'rxjs';
+import { Ticket, TicketResponse } from '../interfaces/ticket-response.interface';
 import { TicketRequest } from '../interfaces/ticket-request.interface';
 
 @Injectable({
@@ -12,19 +12,33 @@ export class TicketService {
   private readonly http = inject(HttpClient);
   private readonly endpoint = `${API_BASE_URL}/tickets`;
 
-  getTickets(): Observable<TicketResponse[]> {
-    return this.http.get<TicketResponse[]>(`${this.endpoint}`);
+  // Devuelve solamente el array de tickets
+  getTickets(): Observable<Ticket[]> {
+    return this.http.get<TicketResponse>(this.endpoint).pipe(map((response) => response.tickets));
   }
 
-  getTicket(id: string): Observable<TicketResponse> {
-    return this.http.get<TicketResponse>(`${this.endpoint}/${id}`);
+  // Devuelve un ticket individual
+  getTicket(id: string): Observable<Ticket> {
+    return this.http.get<Ticket>(`${this.endpoint}/${id}`);
   }
 
-  createTicket(data: TicketRequest): Observable<TicketResponse> {
-    return this.http.post<TicketResponse>(this.endpoint, data);
+  // Crea un ticket
+  createTicket(data: TicketRequest): Observable<Ticket> {
+    return this.http.post<Ticket>(this.endpoint, data);
   }
 
-  updateTicket(id: string, data: TicketRequest): Observable<TicketResponse> {
-    return this.http.patch<TicketResponse>(`${this.endpoint}/${id}`, data);
+  // Actualiza un ticket
+  updateTicket(id: string, data: TicketRequest): Observable<Ticket> {
+    return this.http.patch<Ticket>(`${this.endpoint}/${id}`, data);
+  }
+
+  // Devuelve la respuesta paginada completa
+  getTicketsResponse(limit: number, offset: number): Observable<TicketResponse> {
+    return this.http.get<TicketResponse>(this.endpoint, {
+      params: {
+        limit,
+        offset,
+      },
+    });
   }
 }

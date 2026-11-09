@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { TicketResponse } from '../../interfaces/ticket-response.interface';
+import { Ticket } from '../../interfaces/ticket-response.interface';
 import { TimeAgoPipe } from '../../../../shared/pipes/time-ago.pipe';
 import { PRIORITY_LABELS } from '../../constants/priority-labels';
 import { PRIORITY_BADGES } from '../../constants/priority-badges';
@@ -17,7 +17,7 @@ import { Priority } from '../../enums/priority.enum';
   templateUrl: './ticket-list.html',
 })
 export class TicketList {
-  tickets = input<TicketResponse[] | []>([]);
+  tickets = input<Ticket[] | []>([]);
 
   searchValue = input('');
   statusValue = input<TicketStatus | undefined>(undefined);

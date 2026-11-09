@@ -3,6 +3,12 @@ import { Priority } from '../enums/priority.enum';
 import { TicketStatus } from '../enums/ticket-status.enum';
 
 export interface TicketResponse {
+  count: number;
+  pages: number;
+  tickets: Ticket[];
+}
+
+export interface Ticket {
   id: string;
   title: string;
   detail: string;
