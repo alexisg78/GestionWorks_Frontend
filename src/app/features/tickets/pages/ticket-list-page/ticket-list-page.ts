@@ -5,17 +5,23 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { TicketStore } from '../../services/ticket.store';
 import { TicketStatus } from '../../enums/ticket-status.enum';
 import { Priority } from '../../enums/priority.enum';
+import { Pagination } from '../../../../shared/components/pagination/pagination';
+import { PaginationService } from '../../../../shared/components/pagination/pagination.service';
 
 @Component({
   selector: 'ticket-list-page',
-  imports: [TicketList, TicketFilter],
+  imports: [TicketList, TicketFilter, Pagination],
   templateUrl: './ticket-list-page.html',
 })
 export default class TicketListPage {
-  private readonly ticketStore = inject(TicketStore);
+  readonly ticketStore = inject(TicketStore);
+  readonly paginationService = inject(PaginationService);
 
   readonly ticketsResource = rxResource({
-    stream: () => this.ticketStore.loadTickets(),
+    params: () => ({
+      page: this.paginationService.currentPage(),
+    }),
+    stream: ({ params }) => this.ticketStore.loadTickets(params.page),
   });
 
   readonly searchText = signal('');

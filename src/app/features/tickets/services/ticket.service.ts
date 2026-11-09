@@ -33,7 +33,12 @@ export class TicketService {
   }
 
   // Devuelve la respuesta paginada completa
-  getTicketsResponse(): Observable<TicketResponse> {
-    return this.http.get<TicketResponse>(this.endpoint);
+  getTicketsResponse(limit: number, offset: number): Observable<TicketResponse> {
+    return this.http.get<TicketResponse>(this.endpoint, {
+      params: {
+        limit,
+        offset,
+      },
+    });
   }
 }
