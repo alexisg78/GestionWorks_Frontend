@@ -1,8 +1,8 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { finalize, shareReplay, tap } from 'rxjs/operators';
+import { finalize, map, shareReplay, tap } from 'rxjs/operators';
 
-import { TicketResponse } from '../interfaces/ticket-response.interface';
+import { Ticket, TicketResponse } from '../interfaces/ticket-response.interface';
 import { TicketRequest } from '../interfaces/ticket-request.interface';
 import { TicketService } from './ticket.service';
 
@@ -16,9 +16,13 @@ export class TicketStore {
   // STATE
   // ============================================================
 
-  private readonly ticketsState = signal<Map<string, TicketResponse>>(new Map());
+  private readonly ticketsState = signal<Map<string, Ticket>>(new Map());
 
   private readonly ticketsLoadedState = signal(false);
+
+  private readonly countState = signal(0);
+
+  private readonly pagesState = signal(0);
 
   // ============================================================
   // PUBLIC STATE
@@ -28,39 +32,42 @@ export class TicketStore {
 
   readonly ticketsLoaded = this.ticketsLoadedState.asReadonly();
 
+  readonly count = this.countState.asReadonly();
+
+  readonly pages = this.pagesState.asReadonly();
+
   // ============================================================
   // IN-FLIGHT REQUESTS
   // ============================================================
 
-  private ticketsRequest$?: Observable<TicketResponse[]>;
+  private ticketsRequest$?: Observable<Ticket[]>;
 
-  private readonly ticketRequests = new Map<string, Observable<TicketResponse>>();
+  private readonly ticketRequests = new Map<string, Observable<Ticket>>();
 
   // ============================================================
   // QUERIES
   // ============================================================
 
-  loadTickets(): Observable<TicketResponse[]> {
-    /*
-     * Ya tenemos los tickets en memoria.
-     */
+  loadTickets(): Observable<Ticket[]> {
+    // Ya tenemos los tickets en memoria.
     if (this.ticketsLoadedState()) {
       return of(this.tickets());
     }
 
-    /*
-     * Ya existe una petición en curso.
-     * Reutilizamos la misma petición.
-     */
+    // Ya existe una petición en curso.
     if (this.ticketsRequest$) {
       return this.ticketsRequest$;
     }
 
-    const request$ = this.ticketService.getTickets().pipe(
-      tap((tickets) => {
-        this.setTickets(tickets);
+    const request$ = this.ticketService.getTicketsResponse().pipe(
+      tap((response) => {
+        this.setTickets(response.tickets);
+        this.countState.set(response.count);
+        this.pagesState.set(response.pages);
         this.ticketsLoadedState.set(true);
       }),
+
+      map((response) => response.tickets),
 
       finalize(() => {
         this.ticketsRequest$ = undefined;
@@ -77,28 +84,22 @@ export class TicketStore {
     return request$;
   }
 
-  getTicket(id: string): Observable<TicketResponse> {
-    /*
-     * 1. Buscamos primero en el store.
-     */
+  getTicket(id: string): Observable<Ticket> {
+    // 1. Buscamos primero en el store.
     const cachedTicket = this.ticketsState().get(id);
 
     if (cachedTicket) {
       return of(cachedTicket);
     }
 
-    /*
-     * 2. Ya existe una petición para este ticket.
-     */
+    // 2. Ya existe una petición para este ticket.
     const existingRequest = this.ticketRequests.get(id);
 
     if (existingRequest) {
       return existingRequest;
     }
 
-    /*
-     * 3. No tenemos el ticket → hacemos HTTP.
-     */
+    // 3. No tenemos el ticket -> hacemos HTTP.
     const request$ = this.ticketService.getTicket(id).pipe(
       tap((ticket) => {
         this.setTicket(ticket);
@@ -123,7 +124,7 @@ export class TicketStore {
   // MUTATIONS
   // ============================================================
 
-  createTicket(data: TicketRequest): Observable<TicketResponse> {
+  createTicket(data: TicketRequest): Observable<Ticket> {
     return this.ticketService.createTicket(data).pipe(
       tap((ticket) => {
         this.setTicket(ticket);
@@ -131,7 +132,7 @@ export class TicketStore {
     );
   }
 
-  updateTicket(id: string, data: TicketRequest): Observable<TicketResponse> {
+  updateTicket(id: string, data: TicketRequest): Observable<Ticket> {
     return this.ticketService.updateTicket(id, data).pipe(
       tap((ticket) => {
         this.setTicket(ticket);
@@ -143,7 +144,7 @@ export class TicketStore {
   // CACHE / STORE MANAGEMENT
   // ============================================================
 
-  refreshTickets(): Observable<TicketResponse[]> {
+  refreshTickets(): Observable<Ticket[]> {
     this.ticketsLoadedState.set(false);
 
     return this.fetchTickets();
@@ -152,23 +153,31 @@ export class TicketStore {
   clear(): void {
     this.ticketsState.set(new Map());
     this.ticketsLoadedState.set(false);
+    this.countState.set(0);
+    this.pagesState.set(0);
+    this.ticketsRequest$ = undefined;
+    this.ticketRequests.clear();
   }
 
   // ============================================================
   // PRIVATE STATE OPERATIONS
   // ============================================================
 
-  private fetchTickets(): Observable<TicketResponse[]> {
-    return this.ticketService.getTickets().pipe(
-      tap((tickets) => {
-        this.setTickets(tickets);
+  private fetchTickets(): Observable<Ticket[]> {
+    return this.ticketService.getTicketsResponse().pipe(
+      tap((response) => {
+        this.setTickets(response.tickets);
+        this.countState.set(response.count);
+        this.pagesState.set(response.pages);
         this.ticketsLoadedState.set(true);
       }),
+
+      map((response) => response.tickets),
     );
   }
 
-  private setTickets(tickets: TicketResponse[]): void {
-    const ticketsMap = new Map<string, TicketResponse>();
+  private setTickets(tickets: Ticket[]): void {
+    const ticketsMap = new Map<string, Ticket>();
 
     for (const ticket of tickets) {
       ticketsMap.set(ticket.id, ticket);
@@ -177,7 +186,7 @@ export class TicketStore {
     this.ticketsState.set(ticketsMap);
   }
 
-  private setTicket(ticket: TicketResponse): void {
+  private setTicket(ticket: Ticket): void {
     this.ticketsState.update((current) => {
       const next = new Map(current);
 

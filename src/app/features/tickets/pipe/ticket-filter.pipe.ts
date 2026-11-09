@@ -2,18 +2,18 @@ import { Pipe, type PipeTransform } from '@angular/core';
 
 import { Priority } from '../enums/priority.enum';
 import { TicketStatus } from '../enums/ticket-status.enum';
-import { TicketResponse } from '../interfaces/ticket-response.interface';
+import { Ticket } from '../interfaces/ticket-response.interface';
 
 @Pipe({
   name: 'ticketFilter',
 })
 export class TicketFilterPipe implements PipeTransform {
   transform(
-    tickets: TicketResponse[],
+    tickets: Ticket[],
     search: string,
     status?: TicketStatus,
     priority?: Priority,
-  ): TicketResponse[] {
+  ): Ticket[] {
     const normalizedSearch = search.trim().toLocaleLowerCase();
 
     return tickets.filter((ticket) => {
