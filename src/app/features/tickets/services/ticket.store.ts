@@ -14,6 +14,8 @@ const DEFAULT_PAGE_SIZE = 10;
 export class TicketStore {
   private readonly ticketService = inject(TicketService);
 
+  private generation = 0;
+
   // Estado de las incidencias
   private readonly ticketsState = signal<Map<string, Ticket>>(new Map());
 
@@ -55,6 +57,7 @@ export class TicketStore {
    */
   loadTickets(page: number, limit = DEFAULT_PAGE_SIZE): Observable<Ticket[]> {
     const safePage = Math.max(1, Math.floor(page));
+    const generation = this.generation;
 
     this.currentPageState.set(safePage);
 
@@ -81,6 +84,8 @@ export class TicketStore {
 
     const request$ = this.ticketService.getTicketsResponse(limit, offset).pipe(
       tap((response) => {
+        if (generation !== this.generation) return;
+
         this.pagesCache.set(safePage, response);
 
         this.loadedPagesState.update((current) => {
@@ -111,6 +116,7 @@ export class TicketStore {
    */
   getTicket(id: string): Observable<Ticket> {
     const cachedTicket = this.ticketsState().get(id);
+    const generation = this.generation;
 
     if (cachedTicket) {
       return of(cachedTicket);
@@ -123,7 +129,11 @@ export class TicketStore {
     }
 
     const request$ = this.ticketService.getTicket(id).pipe(
-      tap((ticket) => this.setTicket(ticket)),
+      tap((ticket) => {
+        if (generation !== this.generation) return;
+
+        this.setTicket(ticket);
+      }),
       finalize(() => {
         this.ticketRequests.delete(id);
       }),
@@ -142,8 +152,12 @@ export class TicketStore {
    * Crea una incidencia.
    */
   createTicket(data: TicketRequest): Observable<Ticket> {
+    const generation = this.generation;
+
     return this.ticketService.createTicket(data).pipe(
       tap((ticket) => {
+        if (generation !== this.generation) return;
+
         this.setTicket(ticket);
         this.invalidatePages();
       }),
@@ -154,8 +168,12 @@ export class TicketStore {
    * Actualiza una incidencia.
    */
   updateTicket(id: string, data: TicketRequest): Observable<Ticket> {
+    const generation = this.generation;
+
     return this.ticketService.updateTicket(id, data).pipe(
       tap((ticket) => {
+        if (generation !== this.generation) return;
+
         this.setTicket(ticket);
         this.invalidatePages();
       }),
@@ -183,6 +201,7 @@ export class TicketStore {
    * Limpia todo el estado del store.
    */
   clear(): void {
+    this.generation++;
     this.ticketsState.set(new Map());
     this.currentPageState.set(1);
     this.currentPageIdsState.set([]);

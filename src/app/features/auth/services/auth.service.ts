@@ -7,6 +7,7 @@ import { SKIP_AUTH } from '../../../core/http/http-context.tokens';
 
 import { User } from '../interfaces/user.interface';
 import { AuthResponse } from '../interfaces/auth-response.interface';
+import { TicketStore } from '../../tickets/services/ticket.store';
 
 export type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 const baseUrl = environment.baseUrl;
@@ -18,6 +19,7 @@ export class AuthService {
   private _token = signal<string | null>(localStorage.getItem('token'));
 
   private http = inject(HttpClient);
+  private readonly ticketStore = inject(TicketStore);
 
   checkStatusResource = rxResource({
     stream: () => this.checkAuthStatus(),
@@ -76,6 +78,7 @@ export class AuthService {
   }
 
   logout() {
+    this.ticketStore.clear();
     this._authStatus.set('not-authenticated');
     this._user.set(null);
     this._token.set(null);
